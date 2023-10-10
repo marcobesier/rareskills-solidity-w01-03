@@ -1,66 +1,37 @@
-## Foundry
+# SanctionsToken
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+SanctionsToken is an ERC-20 compliant token contract that allows the contract admin to mint new tokens to any address. Additionally, the contract admin has the authority to ban specific addresses from sending and receiving tokens.
 
-Foundry consists of:
+## Setup
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### Install Foundry
 
-## Documentation
+If you haven't installed Foundry yet, you can do so by following the installation instructions in the [Foundry Book](https://book.getfoundry.sh/getting-started/installation).
 
-https://book.getfoundry.sh/
+### Clone the Repository
 
-## Usage
+Clone the repository to your local machine:
 
-### Build
-
-```shell
-$ forge build
+```bash
+git clone https://github.com/marcobesier/rareskills-solidity-w01-03.git
 ```
 
-### Test
+### Install Dependencies
 
-```shell
-$ forge test
+Install the necessary dependencies using forge:
+
+```bash
+forge install
 ```
 
-### Format
+This will install the OpenZeppelin contracts which are used in the SanctionsToken contract.
 
-```shell
-$ forge fmt
-```
+## License
 
-### Gas Snapshots
+MIT
 
-```shell
-$ forge snapshot
-```
+## Acknowledgements
 
-### Anvil
+This project was a practice assignment during the [RareSkills Solidity Bootcamp (Advanced)](https://www.rareskills.io/solidity-bootcamp).
 
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+A huge shout-out to Jeffrey Scholz and the RareSkills team for putting together such a great bootcamp!
