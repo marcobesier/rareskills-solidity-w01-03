@@ -71,6 +71,7 @@ contract SanctionsTokenTest is Test {
     }
 
     function testFuzz_TransferSenderBanned(address banned) public {
+        vm.assume(banned != address(0));
         vm.assume(banned != user1);
         sanctionsToken.mint(banned, 1);
         sanctionsToken.ban(banned);
@@ -99,6 +100,7 @@ contract SanctionsTokenTest is Test {
     }
 
     function testFuzz_TransferFromSenderBanned(address banned) public {
+        vm.assume(banned != address(0));
         vm.assume(banned != user1);
         sanctionsToken.mint(banned, 1);
         sanctionsToken.ban(banned);
