@@ -13,7 +13,7 @@ contract SanctionsToken is ERC20 {
     address public immutable admin;
     mapping(address => bool) public banned;
 
-    event Ban(address indexed account);
+    event Ban(address account);
 
     error NotAdmin();
     error SenderBanned();
