@@ -80,7 +80,7 @@ contract SanctionsTokenTest is Test {
     }
 
     function testFuzz_RecipientBanned(address banned) public {
-        vm.assume(banned != user2);
+        vm.assume(banned != user1);
         sanctionsToken.mint(user1, 1);
         sanctionsToken.ban(banned);
         vm.prank(user1);
