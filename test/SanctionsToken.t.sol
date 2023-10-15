@@ -70,7 +70,7 @@ contract SanctionsTokenTest is Test {
         assertEq(sanctionsToken.balanceOf(user2), value);
     }
 
-    function testFuzz_SenderBanned(address banned) public {
+    function testFuzz_TransferSenderBanned(address banned) public {
         vm.assume(banned != user1);
         sanctionsToken.mint(banned, 1);
         sanctionsToken.ban(banned);
@@ -79,12 +79,43 @@ contract SanctionsTokenTest is Test {
         sanctionsToken.transfer(user1, 1);
     }
 
-    function testFuzz_RecipientBanned(address banned) public {
+    function testFuzz_TransferRecipientBanned(address banned) public {
         vm.assume(banned != user1);
         sanctionsToken.mint(user1, 1);
         sanctionsToken.ban(banned);
         vm.prank(user1);
         vm.expectRevert(abi.encodeWithSelector(RecipientBanned.selector));
         sanctionsToken.transfer(banned, 1);
+    }
+
+    function testFuzz_TransferFrom(uint256 value) public {
+        sanctionsToken.mint(user1, value);
+        vm.prank(user1);
+        sanctionsToken.approve(user2, value);
+        vm.prank(user2);
+        sanctionsToken.transferFrom(user1, user2, value);
+        assertEq(sanctionsToken.balanceOf(user1), 0);
+        assertEq(sanctionsToken.balanceOf(user2), value);
+    }
+
+    function testFuzz_TransferFromSenderBanned(address banned) public {
+        vm.assume(banned != user1);
+        sanctionsToken.mint(banned, 1);
+        sanctionsToken.ban(banned);
+        vm.prank(banned);
+        sanctionsToken.approve(user1, 1);
+        vm.expectRevert(abi.encodeWithSelector(SenderBanned.selector));
+        sanctionsToken.transferFrom(banned, user1, 1);
+    }
+
+    function testFuzz_TransferFromRecipientBanned(address banned) public {
+        vm.assume(banned != user1);
+        sanctionsToken.mint(user1, 1);
+        sanctionsToken.ban(banned);
+        vm.prank(user1);
+        sanctionsToken.approve(user2, 1);
+        vm.expectRevert(abi.encodeWithSelector(RecipientBanned.selector));
+        vm.prank(user2);
+        sanctionsToken.transferFrom(user1, banned, 1);
     }
 }
