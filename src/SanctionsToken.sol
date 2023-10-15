@@ -10,7 +10,7 @@ import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * address. Furthermore, the contract admin can ban specified addresses from sending and receiving tokens.
  */
 contract SanctionsToken is ERC20 {
-    address public immutable admin;
+    address public immutable ADMIN;
     mapping(address => bool) public banned;
 
     event Ban(address account);
@@ -21,7 +21,7 @@ contract SanctionsToken is ERC20 {
     error AccountAlreadyBanned();
 
     constructor(string memory name, string memory symbol) ERC20(name, symbol) {
-        admin = msg.sender;
+        ADMIN = msg.sender;
     }
 
     /**
@@ -32,7 +32,7 @@ contract SanctionsToken is ERC20 {
      * @param value The amount of tokens to mint in units of the smallest denomination.
      */
     function mint(address to, uint256 value) external {
-        if (msg.sender != admin) {
+        if (msg.sender != ADMIN) {
             revert NotAdmin();
         }
         _mint(to, value);
@@ -47,7 +47,7 @@ contract SanctionsToken is ERC20 {
      * - The account must not already be banned.
      */
     function ban(address account) external {
-        if (msg.sender != admin) {
+        if (msg.sender != ADMIN) {
             revert NotAdmin();
         }
         if (banned[account]) {
